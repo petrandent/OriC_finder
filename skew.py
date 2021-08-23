@@ -1,6 +1,45 @@
 import matplotlib.pyplot as plt
 
+
+def opposite_strand(dna_string):
+    """returns the opposite strand in a 5 --> 3 direction"""
+    opposite=""
+    for i in dna_string:
+        if i=="A":
+            opposite="T"+opposite
+        if i=="G":
+            opposite="C"+opposite
+        if i=="C":
+            opposite="G"+opposite
+        if i=="T":
+            opposite="A"+opposite
+    return opposite
+
+def hamming(text1,text2):
+    """calculates hamming distance between 2 texts of equal length, if not equal it throws an error"""
+    distance=0
+    if len(text1)!=len(text2):
+        return "Error"
+    else:
+        for i in range(len(text1)):
+            if text1[i]!=text2[i]:
+                distance+=1
+            else:
+                continue
+    return distance
+
+def distant_pattern_count(text,pattern,d=1):
+    """counts patterns with distance=1 from exact pattern"""
+    count=0
+    for i in range(len(text)-len(pattern)+1):
+        if hamming(pattern,text[i:(i+len(pattern))])<2:
+            count+=1
+        else:
+            continue
+    return count
+
 def most_frequent_kmer(text,k=9):
+    """returns a dictionary with key the most frequent kmer and value the number of times it appears"""
     kmers={}
     for i in range(len(text)-k+1):
         subpattern=text[i:(i+k)]
@@ -15,31 +54,6 @@ def most_frequent_kmer(text,k=9):
             frequent_kmers[key]=v
         else:continue
     return frequent_kmers
-
-def opposite_strand(dna_string):
-    opposite=""
-    for i in dna_string:
-        if i=="A":
-            opposite="T"+opposite
-        if i=="G":
-            opposite="C"+opposite
-        if i=="C":
-            opposite="G"+opposite
-        if i=="T":
-            opposite="A"+opposite
-    return opposite
-
-def hamming(text1,text2):
-    distance=0
-    if len(text1)!=len(text2):
-        return "Error"
-    else:
-        for i in range(len(text1)):
-            if text1[i]!=text2[i]:
-                distance+=1
-            else:
-                continue
-    return distance
 
 
 genome1=open("pg.txt")
@@ -68,13 +82,13 @@ minimum_position=skew_array.index(minimum_skew)
 print(minimum_position)
 
 
-
 #skey plot
 #plt.xlabel("position")
 #plt.ylabel("skew")
 #plt.title("Skew diagram")
 #plt.plot(x_axis,skew_array)
 #plt.show()
+
 
 #3 positions of 500 bps
 position1=minimum_position-500
@@ -88,3 +102,4 @@ string3=genome_text[position3:position3+500]
 #testing
 a=most_frequent_kmer("aaaattattatattttttaaaaa",2)
 print(a)
+
