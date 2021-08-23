@@ -83,9 +83,6 @@ x_axis=list(range(len(skew_array)))
 
 minimum_skew=min(skew_array)
 minimum_position=skew_array.index(minimum_skew)
-print(minimum_position)
-
-
 
 #skey plot
 #plt.xlabel("position")
@@ -94,34 +91,25 @@ print(minimum_position)
 #plt.plot(x_axis,skew_array)
 #plt.show()
 
+string3=genome_text[minimum_position:minimum_position+500]
+motifs=most_frequent_kmer(string3)
 
+#opposites shows how many times the opposite strand appears on string
+opposites={}
+for i in motifs:
+    opposites[opposite_strand(i)]=string3.count(opposite_strand(i))
 
-#3 positions of 500 bps
-position_back=minimum_position-500
-position_just=minimum_position
-position_front=minimum_position+500
+motifs.update(opposites)
 
-string1=genome_text[position_back:position_back+500]
-string2=genome_text[position_just:position_just+500]
-string3=genome_text[position_front:position_front+500]
-strings_array=[string1,string2,string3]
-all_strings_motifs=[]
-for i in range(len(strings_array)):
-    temp_motif=most_frequent_kmer(strings_array[i])
-    temporary_list=[]
-    for j in temp_motif.values():
-        if j>1:
-            temporary_list.append(j)
-        else:
-            continue
-    if temporary_list==[]:
-        print("{} has no repeated kmers".format(str(i)))
-    else:
-        all_strings_motifs.append(temp_motif)
-print("motifs for all 3 DNA areas: " , all_strings_motifs)
+for i in motifs:
+    motifs[i]=distant_pattern_count(string3,i)
+
+print(motifs)
 
 #testing
-#a=most_frequent_kmer("aaaattattatattttttaaaaa",2)
-#print(a)
+
+
+
+
 
 
