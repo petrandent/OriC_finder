@@ -118,9 +118,10 @@ for i in range(len(strings_array)):
         print("{} has no repeated kmers".format(str(i)))
     else:
         all_strings_motifs.append(temp_motif)
-print(all_strings_motifs)
+print("motifs for all 3 DNA areas: " , all_strings_motifs)
 
 #testing
 #a=most_frequent_kmer("aaaattattatattttttaaaaa",2)
 #print(a)
+
 
